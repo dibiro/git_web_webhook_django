@@ -66,7 +66,7 @@ class UpdateLog(models.Model):
         verbose_name_plural = "update_items"
 
     def __unicode__(self):
-        return '%s' % (self.project)
+        return '%s' % (self.update)
 
     def __str__(self):
-        return '%s' % (self.project)
+        return '%s' % (self.update)

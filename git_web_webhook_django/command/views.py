@@ -1,23 +1,27 @@
-from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings as _settings
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect, HttpResponse
 from command.models import * 
 import json
 import subprocess
 
 
+@csrf_exempt
 def update(request, *args, **kwargs):
+    lista = []
+    dicc = {}
     try:
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         for item in _settings.RESPOSITORY_KEY_NAME:
-            keys = _settings.item.split('.')
+            keys = item.split('.')
             name = body
             project = False
             try:
                 for key in keys:
                     name = name[key]
-                project = Project.objects.get(git_name=name)
-                commands = Command.objects.filter(project=project)
+                project = Project.objects.get(git_name=name, is_active=True)
+                commands = Command.objects.filter(project=project).order_by('position')
                 update = Update(
                     project=project,
                     request=body_unicode,
@@ -50,7 +54,7 @@ def update(request, *args, **kwargs):
                     )
                     Update_log.save()
             except Exception as identifier:
-                pass
+                lista.append({"error":identifier})
     except Exception as error:
-        pass
+        lista.append({"error":error})
     return HttpResponse('ok', content_type='application/json; charset=utf-8')
