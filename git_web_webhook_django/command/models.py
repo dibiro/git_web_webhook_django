@@ -6,6 +6,7 @@ class Project(models.Model):
     git_name = models.CharField(max_length=500, blank=True, null=True, unique=True)
     description = models.TextField(blank=True, null=True)
     create_date = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField()
 
     class Meta:
         db_table = 'project'

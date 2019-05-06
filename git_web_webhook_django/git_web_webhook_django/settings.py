@@ -131,3 +131,5 @@ CORS_ALLOW_METHODS = (
     'OPTIONS',
     'POST',
 )
+
+RESPOSITORY_KEY_NAME = ['repository']
