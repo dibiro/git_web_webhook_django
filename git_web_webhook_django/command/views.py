@@ -3,11 +3,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, HttpResponse
 from command.models import * 
 import json
-import subprocess
+import subprocess, os
 
 
 @csrf_exempt
 def update(request, *args, **kwargs):
+    my_env = os.environ.copy()
     lista = []
     dicc = {}
     try:
@@ -33,7 +34,8 @@ def update(request, *args, **kwargs):
                         respuesta = subprocess.check_output(
                             command.command,
                             stderr=subprocess.STDOUT,
-                            shell=True
+                            shell=True,
+                            env=my_env
                         )
                         try:
                             respuesta = respuesta.decode("utf-8")
