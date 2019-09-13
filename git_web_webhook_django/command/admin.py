@@ -16,7 +16,7 @@ class UpdateItemAdmin(admin.ModelAdmin):
         'update__project__name',
     )
     list_filter = ('create_date', 'update')
-    list_display = ['update', 'create_date'] 
+    list_display = ['update', 'create_date',] 
 
 
 class CommandAdmin(admin.ModelAdmin):
@@ -24,8 +24,7 @@ class CommandAdmin(admin.ModelAdmin):
         'name',
         'project__name',
     )
-    list_filter = ('project')
-    list_display = ['project', 'name', 'create_date'] 
+    list_display = ['project', 'name',] 
 
 
 admin.site.register(Project, ProjectAdmin)
